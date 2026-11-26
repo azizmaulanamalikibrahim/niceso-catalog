@@ -72,6 +72,15 @@ nav{background:color-mix(in srgb,var(--bg) 90%,transparent);-webkit-backdrop-fil
 nav button{padding:9px 0 7px;font-size:11px}
 nav button i{width:52px;margin:0 auto 2px;padding:3px 0;border-radius:14px;transition:.2s}
 nav button.on i{background:rgba(215,25,32,.12)}
+body{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+nav{left:14px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));padding:8px;border:0;border-radius:999px;background:#0b0b0c;box-shadow:0 10px 30px rgba(0,0,0,.25);justify-content:space-between;gap:2px;-webkit-backdrop-filter:none;backdrop-filter:none}
+nav button{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:8px;height:46px;min-width:44px;padding:0 10px;border-radius:999px;background:transparent;color:#e8e8ea;font-size:13px;font-weight:500;transition:background .25s,padding .25s}
+nav button span{display:none;white-space:nowrap}
+nav button.on{background:#2a2a2c;color:#fff;padding:0 14px}
+nav button.on span{display:inline}
+nav button.on svg{fill:currentColor}
+nav button.on svg .l{fill:#2a2a2c}
+nav button.on:after{content:none}
 </style></head><body>
 <div id="v"></div><div id="m" class="sheet"></div><div id="t"></div>
 <nav id="nav"></nav>
@@ -99,8 +108,9 @@ const price=p=>`<div class="pr ${prom(p)?'red':''}">${rp(cur(p))}</div>${prom(p)
 const card=p=>`<div class=card onclick="detail('${p.id}')"><div class=im>${p.url?`<img loading=lazy src="${p.url}">`:'🖼'}${prom(p)?`<b class=badge>PROMO -${pct(p)}%</b>`:''}<button class=fv onclick="event.stopPropagation();fav('${p.id}')">${S.fav.has(p.id)?'♥':'♡'}</button></div><div class=bd><small>${esc(p.sku)}</small><div class=nm>${esc(p.name)}</div>${price(p)}</div></div>`;
 function fav(id){S.fav.has(id)?S.fav.delete(id):S.fav.add(id);localStorage.fav=JSON.stringify([...S.fav]);render(true)}
 /* ===== Navigasi ===== */
-const TABS=[['home','🏠','Beranda'],['cat','▦','Kategori'],['vis','📷','Visual'],['fav','♥','Favorit'],['me','👤','Profil']];
-$('#nav').innerHTML=TABS.map(t=>`<button data-t=${t[0]} onclick="go('${t[0]}')"><i>${t[1]}</i>${t[2]}</button>`).join('');
+const IC={home:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',cat:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',vis:'<path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle class="l" cx="12" cy="13" r="3.5"/>',fav:'<path d="M12 20.5s-8-4.9-8-11a4.6 4.6 0 0 1 8-3 4.6 4.6 0 0 1 8 3c0 6.1-8 11-8 11z"/>',me:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/>'};
+const TABS=[['home','Beranda'],['cat','Kategori'],['vis','Visual'],['fav','Favorit'],['me','Profil']];
+$('#nav').innerHTML=TABS.map(t=>`<button data-t=${t[0]} onclick="go('${t[0]}')"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${IC[t[0]]}</svg><span>${t[1]}</span></button>`).join('');
 const go=t=>{S.tab=t;render()};
 function render(keep){document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t==S.tab));
  if(keep&&S.tab==='home'&&$('#g')){grid();return}
