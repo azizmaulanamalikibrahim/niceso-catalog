@@ -1,0 +1,17 @@
+{
+  "name": "NICESO CATALOG",
+  "short_name": "NICESO",
+  "description": "Katalog produk NICESO",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f6f6f8",
+  "theme_color": "#d71920",
+  "icons": [
+    {
+      "src": "assets/icon-logo.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

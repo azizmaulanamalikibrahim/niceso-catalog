@@ -21,3 +21,12 @@ Buka app.netlify.com/drop -> seret folder `www` (yang sudah berisi config.js) ->
 - Pembaruan produk muncul otomatis di HP lain (realtime) atau saat aplikasi dibuka kembali.
 - Admin tambahan: buat user baru lalu jalankan insert ke `admins`.
 - Visual Search = pencocokan sidik visual foto, bukan AI pengenal objek.
+
+
+## Identitas Logo & Ikon APK
+- `assets/icon-only.png` adalah sumber ikon utama APK (minimal 1024×1024).
+- `assets/icon-foreground.png` dan `assets/icon-background.png` dipakai untuk adaptive icon Android.
+- `www/assets/brand-logo.png` dipakai pada header aplikasi.
+- `www/assets/icon-logo.png` dipakai sebagai ikon browser/PWA.
+- Workflow GitHub Actions memakai `@capacitor/assets` versi yang dipatok di `package.json`.
+- Setiap build GitHub Actions memakai nomor run sebagai `versionCode` agar APK baru dapat dipasang sebagai pembaruan.

@@ -1,6 +1,10 @@
 <!doctype html><html lang="id"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>NICESO CATALOG</title>
+<link rel="icon" type="image/png" href="assets/icon-logo.png">
+<link rel="apple-touch-icon" href="assets/icon-logo.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#d71920">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="config.js"></script>
@@ -43,6 +47,11 @@ nav button{flex:1;border:0;background:0;padding:8px 0;font-size:11px;color:var(-
 :root[data-theme=dark]{--bg:#0f0f10;--card:#1a1a1c;--bd:#2a2a2d;--sh:none}
 @media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f0f10;--card:#1a1a1c;--bd:#2a2a2d;--sh:none}}
 h2{font-size:22px;font-weight:700;margin:0 0 14px}
+.brand{display:flex;align-items:center;gap:10px;min-height:44px}
+.brand img{display:block;width:116px;height:auto;max-height:42px;object-fit:contain;border-radius:8px}
+.brand h1{font-size:17px;font-weight:800;letter-spacing:1.1px;color:var(--tx);line-height:1}
+.brand small{display:block;margin-top:4px;font-size:10px;letter-spacing:1.35px;color:var(--mut);font-weight:600}
+
 .top{background:color-mix(in srgb,var(--bg) 88%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);padding-bottom:4px}
 .sr{position:relative;margin:10px 0 2px}
 .sr:before{content:"⌕";position:absolute;left:15px;top:50%;transform:translateY(-54%);font-size:21px;color:var(--mut)}
@@ -116,7 +125,7 @@ function render(keep){document.querySelectorAll('nav button').forEach(b=>b.class
  if(keep&&S.tab==='home'&&$('#g')){grid();return}
  ({home,cat:cats,vis,fav:favs,me})[S.tab]()}
 /* ===== Beranda ===== */
-function home(){$('#v').innerHTML=`<div class=top><h1><b>NICESO</b> CATALOG</h1><div class=sr><input id=q type=search placeholder="Cari SKU atau nama barang" value="${esc(S.q)}"></div><div class=chips><span class="chip ${S.promo?'on':''}" onclick="S.promo=!S.promo;home()">🏷 Promo</span><span class="chip ${S.cat?'':'on'}" onclick="S.cat='';home()">Semua</span>${CATS.map(c=>`<span class="chip ${S.cat===c?'on':''}" onclick="S.cat=this.dataset.c;home()" data-c="${esc(c)}">${esc(c)}</span>`).join('')}</div></div><div class=hd id=cn></div><div id=g class=grid></div>`;
+function home(){$('#v').innerHTML=`<div class=top><div class=brand><img src="assets/brand-logo.png" alt="NICESO"><div><h1>CATALOG</h1><small>PRODUCT COLLECTION</small></div></div><div class=sr><input id=q type=search placeholder="Cari SKU atau nama barang" value="${esc(S.q)}"></div><div class=chips><span class="chip ${S.promo?'on':''}" onclick="S.promo=!S.promo;home()">🏷 Promo</span><span class="chip ${S.cat?'':'on'}" onclick="S.cat='';home()">Semua</span>${CATS.map(c=>`<span class="chip ${S.cat===c?'on':''}" onclick="S.cat=this.dataset.c;home()" data-c="${esc(c)}">${esc(c)}</span>`).join('')}</div></div><div class=hd id=cn></div><div id=g class=grid></div>`;
  $('#q').oninput=e=>{S.q=e.target.value;grid()};grid()}
 function grid(){const k=S.q.trim().toLowerCase();const l=P.filter(p=>(!S.cat||p.cat===S.cat)&&(!S.promo||prom(p))&&(!k||p.name.toLowerCase().includes(k)||p.sku.toLowerCase().includes(k)));
  if($('#cn'))$('#cn').textContent=l.length+' produk';$('#g').innerHTML=l.length?l.map(card).join(''):'<div class=empty>🔍<br>Produk tidak ditemukan</div>'}
