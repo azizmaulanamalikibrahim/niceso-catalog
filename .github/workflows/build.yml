@@ -21,7 +21,7 @@ jobs:
       - run: npx cap add android
       - run: python3 tool/patch_android.py
       - name: Buat ikon aplikasi
-        run: npx --yes @capacitor/assets generate --android --iconBackgroundColor '#ed1b24'
+        run: npx capacitor-assets generate --android --iconBackgroundColor '#ed1b24'
       - run: npx cap sync android
       - run: cd android && ./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
