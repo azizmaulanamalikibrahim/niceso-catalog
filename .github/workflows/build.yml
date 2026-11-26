@@ -17,6 +17,7 @@ jobs:
         run: |
           cp node_modules/xlsx/dist/xlsx.full.min.js www/xlsx.js
           cp node_modules/@supabase/supabase-js/dist/umd/supabase.js www/supabase.js
+          cp node_modules/@zxing/browser/umd/index.min.js www/zxing-browser.js
           sed -i 's#https://cdnjs[^"]*#xlsx.js#; s#https://cdn.jsdelivr[^"]*#supabase.js#' www/index.html
       - run: npx cap add android
       - run: python3 tool/patch_android.py
