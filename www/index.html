@@ -39,6 +39,39 @@ nav button{flex:1;border:0;background:0;padding:8px 0;font-size:11px;color:var(-
 .tabs{display:flex;gap:6px;margin-bottom:12px}.tabs .chip{flex:1;text-align:center;padding:8px 4px}
 #t{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#222;color:#fff;padding:10px 16px;border-radius:20px;z-index:30;display:none}
 .empty{text-align:center;color:var(--mut);padding:40px 16px;grid-column:1/-1}
+ :root{--bg:#f6f6f8;--card:#fff;--bd:#eeeef1;--sh:0 1px 2px rgba(0,0,0,.04),0 6px 18px rgba(0,0,0,.05)}
+:root[data-theme=dark]{--bg:#0f0f10;--card:#1a1a1c;--bd:#2a2a2d;--sh:none}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f0f10;--card:#1a1a1c;--bd:#2a2a2d;--sh:none}}
+h2{font-size:22px;font-weight:700;margin:0 0 14px}
+.top{background:color-mix(in srgb,var(--bg) 88%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);padding-bottom:4px}
+.sr{position:relative;margin:10px 0 2px}
+.sr:before{content:"⌕";position:absolute;left:15px;top:50%;transform:translateY(-54%);font-size:21px;color:var(--mut)}
+.sr input{-webkit-appearance:none;padding:14px 16px 14px 44px;border-radius:18px;background:var(--card);box-shadow:var(--sh);margin:0}
+.chip{background:var(--card);border:0;box-shadow:var(--sh);padding:8px 16px;font-size:14px;transition:.15s}
+.chip.on{background:var(--r);color:#fff;box-shadow:0 4px 12px rgba(215,25,32,.3)}
+.hd{padding:6px 18px 0;color:var(--mut);font-size:13px}
+.grid{gap:14px;padding:10px 16px}
+.card{background:var(--card);border-radius:22px;box-shadow:var(--sh);transition:transform .15s}
+.card:active{transform:scale(.97)}
+.im{border-radius:0}
+.fv{background:rgba(255,255,255,.9);box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.bd{padding:12px}.bd small{font-size:11px;letter-spacing:.5px;text-transform:uppercase}
+.nm{font-size:14px;font-weight:600}.pr{font-size:16px}
+.empty{padding:60px 16px;font-size:15px}
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ct{background:var(--card);border-radius:20px;padding:18px 16px;box-shadow:var(--sh);cursor:pointer}
+.ct i{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--r);color:#fff;font-style:normal;margin-bottom:12px}
+.ct b{display:block}.ct small{color:var(--mut)}
+.pf{display:flex;gap:14px;align-items:center;background:var(--card);border-radius:20px;padding:16px;box-shadow:var(--sh)}
+.av{width:52px;height:52px;border-radius:50%;background:var(--r);display:grid;place-items:center;font-size:24px;flex:none}
+.sl{margin:20px 0 8px;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--mut);font-weight:700}
+.seg{display:flex;background:var(--card);border-radius:14px;padding:4px;box-shadow:var(--sh)}
+.seg span{flex:1;text-align:center;padding:9px 0;border-radius:11px;cursor:pointer;font-size:14px}
+.seg span.on{background:var(--r);color:#fff;font-weight:600}
+nav{background:color-mix(in srgb,var(--bg) 90%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-top:0;box-shadow:0 -1px 0 var(--bd)}
+nav button{padding:9px 0 7px;font-size:11px}
+nav button i{width:52px;margin:0 auto 2px;padding:3px 0;border-radius:14px;transition:.2s}
+nav button.on i{background:rgba(215,25,32,.12)}
 </style></head><body>
 <div id="v"></div><div id="m" class="sheet"></div><div id="t"></div>
 <nav id="nav"></nav>
@@ -73,12 +106,12 @@ function render(keep){document.querySelectorAll('nav button').forEach(b=>b.class
  if(keep&&S.tab==='home'&&$('#g')){grid();return}
  ({home,cat:cats,vis,fav:favs,me})[S.tab]()}
 /* ===== Beranda ===== */
-function home(){$('#v').innerHTML=`<div class=top><h1><b>NICESO</b> CATALOG</h1><input id=q type=search placeholder="Cari SKU atau nama barang" value="${esc(S.q)}"><div class=chips><span class="chip ${S.promo?'on':''}" onclick="S.promo=!S.promo;home()">🏷 Promo</span><span class="chip ${S.cat?'':'on'}" onclick="S.cat='';home()">Semua</span>${CATS.map(c=>`<span class="chip ${S.cat===c?'on':''}" onclick="S.cat=this.dataset.c;home()" data-c="${esc(c)}">${esc(c)}</span>`).join('')}</div></div><div id=g class=grid></div>`;
+function home(){$('#v').innerHTML=`<div class=top><h1><b>NICESO</b> CATALOG</h1><div class=sr><input id=q type=search placeholder="Cari SKU atau nama barang" value="${esc(S.q)}"></div><div class=chips><span class="chip ${S.promo?'on':''}" onclick="S.promo=!S.promo;home()">🏷 Promo</span><span class="chip ${S.cat?'':'on'}" onclick="S.cat='';home()">Semua</span>${CATS.map(c=>`<span class="chip ${S.cat===c?'on':''}" onclick="S.cat=this.dataset.c;home()" data-c="${esc(c)}">${esc(c)}</span>`).join('')}</div></div><div class=hd id=cn></div><div id=g class=grid></div>`;
  $('#q').oninput=e=>{S.q=e.target.value;grid()};grid()}
 function grid(){const k=S.q.trim().toLowerCase();const l=P.filter(p=>(!S.cat||p.cat===S.cat)&&(!S.promo||prom(p))&&(!k||p.name.toLowerCase().includes(k)||p.sku.toLowerCase().includes(k)));
- $('#g').innerHTML=l.length?l.map(card).join(''):'<div class=empty>Produk tidak ditemukan</div>'}
-function cats(){$('#v').innerHTML=`<div class=pad><h2>Kategori</h2>${CATS.length?CATS.map(c=>`<div class=li onclick="S.cat=this.dataset.c;S.promo=false;S.q='';go('home')" data-c="${esc(c)}"><div><b>${esc(c)}</b><br><small>${P.filter(p=>p.cat===c).length} produk</small></div>›</div>`).join(''):'<div class=empty>Belum ada kategori</div>'}</div>`}
-function favs(){const l=P.filter(p=>S.fav.has(p.id));$('#v').innerHTML=`<div class=pad><h2>Favorit</h2></div><div class=grid>${l.length?l.map(card).join(''):'<div class=empty>Belum ada favorit</div>'}</div>`}
+ if($('#cn'))$('#cn').textContent=l.length+' produk';$('#g').innerHTML=l.length?l.map(card).join(''):'<div class=empty>🔍<br>Produk tidak ditemukan</div>'}
+function cats(){$('#v').innerHTML=`<div class=pad><h2>Kategori</h2>${CATS.length?`<div class=cg>${CATS.map(c=>`<div class=ct onclick="S.cat=this.dataset.c;S.promo=false;S.q='';go('home')" data-c="${esc(c)}"><i>▦</i><b>${esc(c)}</b><small>${P.filter(p=>p.cat===c).length} produk</small></div>`).join('')}</div>`:'<div class=empty>Belum ada kategori</div>'}</div>`}
+function favs(){const l=P.filter(p=>S.fav.has(p.id));$('#v').innerHTML=`<div class=pad><h2>Favorit</h2></div><div class=grid>${l.length?l.map(card).join(''):'<div class=empty>♡<br>Belum ada favorit.<br>Ketuk ikon hati pada produk.</div>'}</div>`}
 /* ===== Detail ===== */
 function sheet(h){$('#m').innerHTML=`<div>${h}</div>`;$('#m').classList.add('on')}
 const closeM=()=>$('#m').classList.remove('on');$('#m').onclick=e=>{if(e.target.id==='m')closeM()};
@@ -96,9 +129,9 @@ function vis(){$('#v').innerHTML=`<div class=pad><h2>Visual Search</h2><div clas
 const sha=async s=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode('niceso'+s)))].map(b=>b.toString(16).padStart(2,'0')).join('');
 function setTheme(t){if(t==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.dataset.theme=t;localStorage.theme=t;me()}
 function me(){const t=localStorage.theme||'auto';
- let h=`<div class=pad><h2>Profil</h2><div class=tabs>${['auto','light','dark'].map(x=>`<span class="chip ${t===x?'on':''}" onclick="setTheme('${x}')">${{auto:'Auto',light:'Terang',dark:'Gelap'}[x]}</span>`).join('')}</div>`;
- if(!S.admin)h+=`<div class=kv style="border:0"><b>Login Admin</b></div><input id=em type=text placeholder="Email admin" autocapitalize=none><input id=pw type=password placeholder="Password"><button class="btn w" onclick="login()">Masuk</button><small style="color:var(--mut)">Hanya admin yang perlu login. Pengguna biasa cukup membuka katalog.</small>`;
- else{h+=`<div class=tabs>${[['dash','Dashboard'],['prod','Produk'],['kat','Kategori'],['data','Data']].map(x=>`<span class="chip ${S.adm===x[0]?'on':''}" onclick="S.adm='${x[0]}';me()">${x[1]}</span>`).join('')}</div>${admin()}<button class="btn o w" onclick="logout()">Keluar admin</button>`}
+ let h=`<div class=pad><h2>Profil</h2><div class=pf><div class=av>${S.admin?'🛠':'👤'}</div><div><b>${S.admin?'Admin':'Pengunjung'}</b><br><small style="color:var(--mut)">${S.admin?'Bisa mengubah katalog':'Hanya melihat katalog'}</small></div></div><div class=sl>Tampilan</div><div class=seg>${['auto','light','dark'].map(x=>`<span class="${t===x?'on':''}" onclick="setTheme('${x}')">${{auto:'Otomatis',light:'Terang',dark:'Gelap'}[x]}</span>`).join('')}</div>`;
+ if(!S.admin)h+=`<div class=sl>Login Admin</div><input id=em type=text placeholder="Email admin" autocapitalize=none><input id=pw type=password placeholder="Password"><button class="btn w" onclick="login()">Masuk</button><small style="color:var(--mut)">Hanya admin yang perlu login. Pengguna biasa cukup membuka katalog.</small>`;
+ else{h+=`<div class=sl>Menu admin</div><div class=tabs>${[['dash','Dashboard'],['prod','Produk'],['kat','Kategori'],['data','Data']].map(x=>`<span class="chip ${S.adm===x[0]?'on':''}" onclick="S.adm='${x[0]}';me()">${x[1]}</span>`).join('')}</div>${admin()}<button class="btn o w" onclick="logout()">Keluar admin</button>`}
  $('#v').innerHTML=h+'</div>'}
 async function chkAdmin(){const{data:{session}}=await sb.auth.getSession();if(!session)return false;const{data}=await sb.from('admins').select('user_id').eq('user_id',session.user.id);return !!(data&&data.length)}
 async function login(){const{error}=await sb.auth.signInWithPassword({email:$('#em').value.trim(),password:$('#pw').value});if(error)return toast('Login gagal: '+error.message);if(!await chkAdmin()){await sb.auth.signOut();return toast('Akun ini bukan admin')}S.admin=true;me()}
