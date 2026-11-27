@@ -125,6 +125,17 @@ nav{z-index:15}
 @media(max-width:900px){.admin-shell{grid-template-columns:190px minmax(0,1fr);padding:16px;gap:16px}.admin-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-panels{grid-template-columns:1fr}}
 @media(max-width:640px){body{padding-bottom:calc(100px + env(safe-area-inset-bottom))}.admin-shell{display:block;padding:14px 14px 110px;min-height:auto}.admin-side{display:none}.admin-main{padding:4px 0}.admin-head{align-items:flex-start;margin-bottom:16px}.admin-head h2{font-size:23px}.admin-head-actions .btn{padding:9px 11px;font-size:12px}.admin-tabs-mobile{display:flex;gap:7px;overflow:auto;padding:4px 0 14px}.admin-tabs-mobile .chip{white-space:nowrap;font-size:12px;padding:8px 13px}.admin-kpis{gap:9px}.admin-kpi{padding:14px;border-radius:15px}.admin-kpi strong{font-size:25px}.admin-kpi-top{font-size:11px}.admin-panel{padding:16px;border-radius:16px}.admin-toolbar{align-items:stretch;flex-direction:column}.admin-toolbar input{max-width:none}.admin-list{padding:4px 12px}.admin-actions .btn{padding:8px}.admin-login{margin:20px auto;padding:22px}.top{padding-left:16px;padding-right:16px}.hd{padding-left:18px;padding-right:18px}.grid{padding-left:16px;padding-right:16px;gap:12px}.im{aspect-ratio:1}.bd{padding:11px}.nm{font-size:13px}}
 
+/* ===== Beranda: grid kategori & ikon outline ===== */
+.cat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:14px clamp(18px,4vw,52px) 0}
+@media(min-width:520px){.cat-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:820px){.cat-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}}
+.cat-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-height:76px;padding:10px 6px;border:1px solid var(--bd);border-radius:16px;background:var(--card);color:var(--tx);cursor:pointer;text-align:center}
+.cat-tile svg{width:22px;height:22px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;color:var(--mut)}
+.cat-tile span{font-size:12px;font-weight:600;line-height:1.25;max-width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-word}
+.cat-tile.on{background:var(--r);border-color:var(--r);color:#fff}
+.cat-tile.on svg{color:#fff}
+.scan-btn svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sr:before{content:"";width:20px;height:20px;font-size:0;background-color:var(--mut);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") center/contain no-repeat}
 </style></head><body>
 <div id="v"></div><div id="m" class="sheet"></div><div id="t"></div>
 <nav id="nav"></nav>
@@ -188,7 +199,14 @@ function render(keep){$('#nav').style.display=(S.tab==='me'&&S.admin)?'none':'fl
  if(keep&&S.tab==='home'&&$('#g')){grid();return}
  ({home,cat:cats,vis,fav:favs,me})[S.tab]()}
 /* ===== Beranda ===== */
-function home(){$('#v').innerHTML=`<div class=top><div class=brand><img src="assets/brand-logo.png" alt="NICESO"><div><h1>CATALOG</h1><small>PRODUCT COLLECTION</small></div></div><div class=sr><input id=q type=search placeholder="Cari SKU atau nama barang" value="${esc(S.q)}"><button class=scan-btn onclick="startBarcodeScan()" aria-label="Scan barcode" title="Scan barcode">▥</button></div><div class=chips><span class="chip ${S.promo?'on':''}" onclick="S.promo=!S.promo;home()">🏷 Promo</span><span class="chip ${S.cat?'':'on'}" onclick="S.cat='';home()">Semua</span>${CATS.map(c=>`<span class="chip ${S.cat===c?'on':''}" onclick="S.cat=this.dataset.c;home()" data-c="${esc(c)}">${esc(c)}</span>`).join('')}</div></div><div class=hd id=cn></div><div id=g class=grid></div>`;
+function home(){
+ const svg=p=>`<svg viewBox="0 0 24 24" aria-hidden="true">${p}</svg>`;
+ const iAll='<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>';
+ const iPromo='<path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.2"/><circle cx="17" cy="17" r="2.2"/>';
+ const iCat='<path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/>';
+ const iScan='<path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M8 9v6M12 9v6M16 9v6"/>';
+ const catTiles=`<button type="button" class="cat-tile ${S.promo?'on':''}" onclick="S.promo=!S.promo;home()">${svg(iPromo)}<span>Promo</span></button><button type="button" class="cat-tile ${S.cat?'':'on'}" onclick="S.cat='';home()">${svg(iAll)}<span>Semua</span></button>${CATS.map(c=>`<button type="button" class="cat-tile ${S.cat===c?'on':''}" onclick="S.cat=this.dataset.c;home()" data-c="${esc(c)}">${svg(iCat)}<span>${esc(c)}</span></button>`).join('')}`;
+ $('#v').innerHTML=`<div class=top><div class=brand><img src="assets/brand-logo.png" alt="NICESO"><div><h1>CATALOG</h1><small>PRODUCT COLLECTION</small></div></div><div class=sr><input id=q type=search placeholder="Cari SKU atau nama barang" value="${esc(S.q)}"><button class=scan-btn onclick="startBarcodeScan()" aria-label="Scan barcode" title="Scan barcode">${svg(iScan)}</button></div></div><div class=cat-grid>${catTiles}</div><div class=hd id=cn></div><div id=g class=grid></div>`;
  $('#q').oninput=e=>{S.q=e.target.value;grid()};grid()}
 let barcodeReader=null,barcodeControls=null,scanBusy=false,scanSession=0;
 async function startBarcodeScan(){
