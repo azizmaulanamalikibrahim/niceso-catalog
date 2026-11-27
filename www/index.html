@@ -125,6 +125,137 @@ nav{z-index:15}
 @media(max-width:900px){.admin-shell{grid-template-columns:190px minmax(0,1fr);padding:16px;gap:16px}.admin-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-panels{grid-template-columns:1fr}}
 @media(max-width:640px){body{padding-bottom:calc(100px + env(safe-area-inset-bottom))}.admin-shell{display:block;padding:14px 14px 110px;min-height:auto}.admin-side{display:none}.admin-main{padding:4px 0}.admin-head{align-items:flex-start;margin-bottom:16px}.admin-head h2{font-size:23px}.admin-head-actions .btn{padding:9px 11px;font-size:12px}.admin-tabs-mobile{display:flex;gap:7px;overflow:auto;padding:4px 0 14px}.admin-tabs-mobile .chip{white-space:nowrap;font-size:12px;padding:8px 13px}.admin-kpis{gap:9px}.admin-kpi{padding:14px;border-radius:15px}.admin-kpi strong{font-size:25px}.admin-kpi-top{font-size:11px}.admin-panel{padding:16px;border-radius:16px}.admin-toolbar{align-items:stretch;flex-direction:column}.admin-toolbar input{max-width:none}.admin-list{padding:4px 12px}.admin-actions .btn{padding:8px}.admin-login{margin:20px auto;padding:22px}.top{padding-left:16px;padding-right:16px}.hd{padding-left:18px;padding-right:18px}.grid{padding-left:16px;padding-right:16px;gap:12px}.im{aspect-ratio:1}.bd{padding:11px}.nm{font-size:13px}}
 
+/* ===== NICESO HOME UI REFRESH ===== */
+
+/* Kunci scroll halaman ketika modal terbuka */
+body.modal-locked {
+  position: fixed;
+  width: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.sheet {
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}
+
+.sheet > div {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+/* Kategori Beranda */
+.home-category-section {
+  padding: 14px 18px 4px;
+}
+
+.home-category-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.home-category-heading b {
+  font-size: 15px;
+  font-weight: 750;
+}
+
+.home-category-heading small {
+  color: var(--mut);
+  font-size: 11px;
+}
+
+.home-category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.home-category-item {
+  min-width: 0;
+  min-height: 76px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 5px;
+  border: 1px solid var(--bd);
+  border-radius: 15px;
+  background: var(--card);
+  color: var(--tx);
+  cursor: pointer;
+  transition: .18s ease;
+}
+
+.home-category-item:active {
+  transform: scale(.96);
+}
+
+.home-category-item.active {
+  border-color: var(--r);
+  background: rgba(215,25,32,.07);
+  color: var(--r);
+}
+
+.home-category-item svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.home-category-item span {
+  width: 100%;
+  font-size: 11px;
+  font-weight: 650;
+  text-align: center;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.home-category-item.promo svg {
+  color: var(--r);
+}
+
+.home-category-item.promo.active {
+  background: var(--r);
+  color: #fff;
+}
+
+.home-category-item.promo.active svg {
+  color: #fff;
+}
+
+.home-category-grid button {
+  font-family: inherit;
+}
+
+.home-products-heading {
+  padding: 18px 18px 0;
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--mut);
+}
+
+@media(min-width:620px) {
+  .home-category-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .home-category-section,
+  .home-products-heading {
+    padding-left: clamp(18px,4vw,52px);
+    padding-right: clamp(18px,4vw,52px);
+  }
+}
+ 
 </style></head><body>
 <div id="v"></div><div id="m" class="sheet"></div><div id="t"></div>
 <nav id="nav"></nav>
@@ -132,7 +263,40 @@ nav{z-index:15}
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const rp=n=>'Rp '+Number(n||0).toLocaleString('id-ID');
 const toast=m=>{const t=$('#t');t.textContent=m;t.style.display='block';clearTimeout(toast.i);toast.i=setTimeout(()=>t.style.display='none',2500)};
-/* ===== Database online (Supabase) ===== */
+
+/* ===== MODAL BACKGROUND SCROLL LOCK ===== */
+let modalScrollY = 0;
+let modalWasLocked = false;
+
+function syncModalScrollLock() {
+  const modal = document.getElementById('m');
+  if (!modal) return;
+
+  const isOpen = modal.classList.contains('on');
+
+  if (isOpen && !modalWasLocked) {
+    modalScrollY = window.scrollY;
+    document.body.style.top = `-${modalScrollY}px`;
+    document.body.classList.add('modal-locked');
+    modalWasLocked = true;
+  }
+
+  if (!isOpen && modalWasLocked) {
+    document.body.classList.remove('modal-locked');
+    document.body.style.top = '';
+    window.scrollTo(0, modalScrollY);
+    modalWasLocked = false;
+  }
+}
+
+const modalObserver = new MutationObserver(syncModalScrollLock);
+modalObserver.observe(document.getElementById('m'), {
+  attributes: true,
+  attributeFilter: ['class']
+});
+ 
+ 
+ /* ===== Database online (Supabase) ===== */
 const sb=supabase.createClient(CFG.url,CFG.key);let OFF=false;
 const ok=r=>{if(r.error){toast('Gagal: '+r.error.message);return false}return true};
 const fromRow=r=>({id:r.id,sku:r.sku,name:r.name,cat:r.cat,normal:+r.normal,promo:r.promo==null?null:+r.promo,on:!!r.promo_on,url:r.photo_url||'',hash:r.hash||''});
@@ -187,24 +351,109 @@ async function registerAndroidBackHandler(){
 function render(keep){$('#nav').style.display=(S.tab==='me'&&S.admin)?'none':'flex';document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t==S.tab));
  if(keep&&S.tab==='home'&&$('#g')){grid();return}
  ({home,cat:cats,vis,fav:favs,me})[S.tab]()}
-/* ===== Beranda ===== */
-function home(){$('#v').innerHTML=`<div class=top><div class=brand><img src="assets/brand-logo.png" alt="NICESO"><div><h1>CATALOG</h1><small>PRODUCT COLLECTION</small></div></div><div class=sr><input id=q type=search placeholder="Cari SKU atau nama barang" value="${esc(S.q)}"><button class=scan-btn onclick="startBarcodeScan()" aria-label="Scan barcode" title="Scan barcode">▥</button></div><div class=chips><span class="chip ${S.promo?'on':''}" onclick="S.promo=!S.promo;home()">🏷 Promo</span><span class="chip ${S.cat?'':'on'}" onclick="S.cat='';home()">Semua</span>${CATS.map(c=>`<span class="chip ${S.cat===c?'on':''}" onclick="S.cat=this.dataset.c;home()" data-c="${esc(c)}">${esc(c)}</span>`).join('')}</div></div><div class=hd id=cn></div><div id=g class=grid></div>`;
- $('#q').oninput=e=>{S.q=e.target.value;grid()};grid()}
-let barcodeReader=null,barcodeControls=null,scanBusy=false,scanSession=0;
-async function startBarcodeScan(){
- if(!navigator.mediaDevices?.getUserMedia)return toast('Kamera tidak didukung di perangkat ini');
- if(!window.ZXingBrowser?.BrowserMultiFormatReader)return toast('Modul scan belum termuat. Periksa koneksi lalu muat ulang aplikasi.');
- const session=++scanSession;
- sheet(`<h2>Scan Barcode</h2><video id=scanVideo playsinline muted></video><div class=scan-help>Posisikan barcode di depan kamera. Pemindaian berlangsung otomatis.</div><button class="btn o w" onclick="stopBarcodeScan()">Tutup Kamera</button>`);
- try{
-  const reader=new ZXingBrowser.BrowserMultiFormatReader();barcodeReader=reader;scanBusy=false;
-  const controls=await reader.decodeFromVideoDevice(undefined,'scanVideo',(result,error)=>{
-   if(session!==scanSession||!result||scanBusy)return;
-   scanBusy=true;const code=String(result.getText()||'').trim();stopBarcodeScan();
-   const found=P.find(p=>String(p.sku).trim().toLowerCase()===code.toLowerCase());
-   if(found){S.q=found.sku;S.cat='';S.promo=false;S.tab='home';render();detail(found.id);toast('Produk ditemukan: '+found.sku)}
-   else{S.q=code;S.cat='';S.promo=false;S.tab='home';render();toast('Barcode '+code+' tidak ditemukan di katalog')}
-  });
+
+/* ===== BERANDA MODERN ===== */
+
+const homeIcon = {
+  all: '<rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/>',
+  promo: '<path d="M20.5 13.5 13 21l-9-9V4h8l8.5 8.5a.7.7 0 0 1 0 1Z"/><circle cx="8" cy="8" r="1"/>',
+  category: '<path d="M4 7h16M4 12h16M4 17h16"/>'
+};
+
+function homeCategoryIcon(type) {
+  return `<svg viewBox="0 0 24 24" aria-hidden="true">
+    ${homeIcon[type] || homeIcon.category}
+  </svg>`;
+}
+
+function home() {
+  const categories = [
+    {
+      name: 'Semua',
+      type: 'all',
+      active: !S.cat && !S.promo,
+      action: "S.cat='';S.promo=false"
+    },
+    {
+      name: 'Promo',
+      type: 'promo',
+      active: S.promo,
+      action: "S.promo=!S.promo;S.cat=''"
+    },
+    ...CATS.map(c => ({
+      name: c,
+      type: 'category',
+      active: S.cat === c,
+      action: 'S.cat=this.dataset.c;S.promo=false',
+      category: c
+    }))
+  ];
+
+  $('#v').innerHTML = `
+    <div class="top">
+      <div class="brand">
+        <img src="assets/brand-logo.png" alt="NICESO">
+        <div>
+          <h1>CATALOG</h1>
+          <small>PRODUCT COLLECTION</small>
+        </div>
+      </div>
+
+      <div class="sr">
+        <input
+          id="q"
+          type="search"
+          placeholder="Cari SKU atau nama barang"
+          value="${esc(S.q)}"
+        >
+        <button
+          class="scan-btn"
+          onclick="startBarcodeScan()"
+          aria-label="Scan barcode"
+          title="Scan barcode"
+        >
+          <svg viewBox="0 0 24 24" width="23" height="23"
+            fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 5v14M6 5v14M10 5v14M13 5v14M17 5v14M20 5v14"/>
+            <path d="M2 9h20M2 15h20" opacity=".35"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <section class="home-category-section">
+      <div class="home-category-heading">
+        <b>Kategori Produk</b>
+        <small>${CATS.length} kategori</small>
+      </div>
+
+      <div class="home-category-grid">
+        ${categories.map(c => `
+          <button
+            class="home-category-item ${c.active ? 'active' : ''} ${c.type === 'promo' ? 'promo' : ''}"
+            ${c.category ? `data-c="${esc(c.category)}"` : ''}
+            onclick="${c.action};home()"
+          >
+            ${homeCategoryIcon(c.type)}
+            <span>${esc(c.name)}</span>
+          </button>
+        `).join('')}
+      </div>
+    </section>
+
+    <div class="home-products-heading" id="cn"></div>
+    <div id="g" class="grid"></div>
+  `;
+
+  $('#q').oninput = e => {
+    S.q = e.target.value;
+    grid();
+  };
+
+  grid();
+}
+ 
   // Jika pengguna menutup scanner sebelum izin kamera selesai, hentikan stream yang baru terbentuk.
   if(session!==scanSession){try{controls.stop()}catch(e){};try{reader.reset()}catch(e){};return}
   barcodeControls=controls;
