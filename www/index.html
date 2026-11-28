@@ -5,10 +5,6 @@
 <link rel="apple-touch-icon" href="assets/icon-logo.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#d71920">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
-<script src="config.js"></script>
-<script src="zxing-browser.js"></script>
 <style>
 :root{--r:#d71920;--bg:#fff;--card:#f6f6f7;--tx:#1b1b1d;--mut:#77777e;--bd:#ececef}
 :root[data-theme=dark]{--r:#ff5a5f;--bg:#121212;--card:#1e1e1e;--tx:#f2f2f2;--mut:#9a9aa0;--bd:#2c2c2c}
@@ -136,10 +132,59 @@ nav{z-index:15}
 .cat-tile.on svg{color:#fff}
 .scan-btn svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .sr:before{content:"";width:20px;height:20px;font-size:0;background-color:var(--mut);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") center/contain no-repeat}
+/* ===== Beranda: header & sidebar ===== */
+.hdr{display:flex;align-items:center;gap:10px;min-height:52px}
+.hdr-brand{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.hdr-brand img{display:block;width:auto;height:auto;max-width:132px;max-height:34px;object-fit:contain}
+.hdr-brand small{display:block;margin-top:3px;font-size:9px;letter-spacing:.17em;color:var(--mut);font-weight:600;white-space:nowrap}
+.hdr-r{display:flex;gap:8px}
+.ib{flex:none;width:44px;height:44px;padding:0;border:1px solid var(--bd);border-radius:14px;background:var(--card);color:var(--tx);display:grid;place-items:center;box-shadow:var(--sh);cursor:pointer}
+.ib svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#g{scroll-margin-top:140px}
+#drawer{position:fixed;inset:0;z-index:25;visibility:hidden;transition:visibility 0s linear .28s}
+#drawer.on{visibility:visible;transition-delay:0s}
+.dr-ov{position:absolute;inset:0;background:rgba(0,0,0,.45);opacity:0;transition:opacity .28s ease}
+#drawer.on .dr-ov{opacity:1}
+.dr-pn{position:absolute;top:0;bottom:0;left:0;width:min(300px,82vw);background:var(--card);transform:translateX(-102%);transition:transform .28s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);box-shadow:0 0 40px rgba(0,0,0,.25)}
+#drawer.on .dr-pn{transform:none}
+.dr-hd{padding:22px 20px 16px;border-bottom:1px solid var(--bd)}
+.dr-hd img{display:block;max-width:150px;max-height:40px;object-fit:contain}
+.dr-hd small{display:block;margin-top:6px;font-size:9px;letter-spacing:.17em;color:var(--mut);font-weight:600}
+.dr-ls{flex:1;overflow:auto;padding:10px}
+.dr-it{width:100%;display:flex;align-items:center;gap:14px;border:0;background:transparent;color:var(--tx);padding:13px 12px;border-radius:14px;font-size:14px;font-weight:600;text-align:left;cursor:pointer}
+.dr-it svg{width:21px;height:21px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;color:var(--mut)}
+.dr-it.on{background:rgba(215,25,32,.09);color:var(--r)}
+.dr-it.on svg{color:var(--r)}
+.dr-ft{padding:14px 20px;border-top:1px solid var(--bd);font-size:11px;color:var(--mut);line-height:1.6}
+.nf-empty{text-align:center;padding:26px 10px 14px;color:var(--mut)}
+.nf-empty svg{display:block;margin:0 auto 10px;width:44px;height:44px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+/* ===== Splash screen ===== */
+#splash{position:fixed;inset:0;z-index:100;background:#fff;display:flex;align-items:center;justify-content:center;opacity:1;transition:opacity .45s ease}
+#splash.out{opacity:0;pointer-events:none}
+.sp-logo{position:relative;display:flex;justify-content:center}
+.sp-logo img{display:block;width:min(62vw,260px);height:auto;max-height:30vh;object-fit:contain;animation:spIn .8s ease both}
+.sp-txt{position:absolute;top:100%;left:50%;width:90vw;margin-left:-45vw;margin-top:26px;text-align:center}
+.sp-t{display:block;font-size:19px;font-weight:800;letter-spacing:.14em;color:#191919;animation:spUp .7s ease .7s both}
+.sp-d{display:block;margin-top:8px;font-size:12px;letter-spacing:.04em;color:#555;animation:spUp .7s ease 1.2s both}
+@keyframes spIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+@keyframes spUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 </style></head><body>
-<div id="v"></div><div id="m" class="sheet"></div><div id="t"></div>
+<div id="splash" aria-label="NICESO CATALOG"><div class="sp-logo"><img src="assets/brand-logo.png" alt="NICESO"><div class="sp-txt"><span class="sp-t">NICESO CATALOG</span><span class="sp-d">Developer by Aziz Maulana Malik Ibrahim</span></div></div></div>
+<div id="v"></div><div id="m" class="sheet"></div><div id="drawer"></div><div id="t"></div>
 <nav id="nav"></nav>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="config.js"></script>
+<script src="zxing-browser.js"></script>
 <script>
+/* ===== Splash screen ===== */
+const SPLASH_MIN=2500,SPLASH_MAX=6000;
+function hideSplash(){
+ const s=document.getElementById('splash');if(!s||s.dataset.done)return;s.dataset.done='1';
+ const wait=Math.max(0,SPLASH_MIN-performance.now());
+ setTimeout(()=>{s.classList.add('out');setTimeout(()=>s.remove(),500)},wait);
+}
+setTimeout(hideSplash,SPLASH_MAX);
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const rp=n=>'Rp '+Number(n||0).toLocaleString('id-ID');
 const toast=m=>{const t=$('#t');t.textContent=m;t.style.display='block';clearTimeout(toast.i);toast.i=setTimeout(()=>t.style.display='none',2500)};
@@ -171,6 +216,7 @@ const go=t=>{if(!t||t===S.tab)return;TAB_HISTORY.push(S.tab);S.tab=t;render()};
 function handleAppBack(App){
  // Modal/detail dan scanner selalu ditangani sebelum navigasi halaman.
  if(barcodeReader||barcodeControls||$('#scanVideo')){stopBarcodeScan();return}
+ if($('#drawer')?.classList.contains('on')){closeDrawer();return}
  if($('#m')?.classList.contains('on')){closeM();return}
  if(S.tab!=='home'){
   const previous=TAB_HISTORY.pop();
@@ -198,6 +244,34 @@ async function registerAndroidBackHandler(){
 function render(keep){$('#nav').style.display=(S.tab==='me'&&S.admin)?'none':'flex';document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t==S.tab));
  if(keep&&S.tab==='home'&&$('#g')){grid();return}
  ({home,cat:cats,vis,fav:favs,me})[S.tab]()}
+/* ===== Header, sidebar, notifikasi & keranjang ===== */
+const APP_VER='1.0.0';
+const HDR_IC={menu:'<path d="M4 7h16M4 12h16M4 17h10"/>',bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/>',bag:'<path d="M6 7h12l1 13H5z"/><path d="M9 7V6a3 3 0 0 1 6 0v1"/>'};
+const DRAWER_IC={all:'<path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/>',promo:'<path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.2"/><circle cx="17" cy="17" r="2.2"/>',set:'<path d="M4 6h8M18 6h2M4 12h2M12 12h8M4 18h10M20 18h0"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/>',info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>'};
+function drawerItems(){return [['home','Beranda',IC.home],['all','Semua Produk',DRAWER_IC.all],['cat','Kategori Produk',IC.cat],['promo','Promo',DRAWER_IC.promo],['fav','Produk Favorit',IC.fav],['me','Pengaturan',DRAWER_IC.set],['about','Tentang NICESO CATALOG',DRAWER_IC.info]]}
+function openDrawer(){
+ const on=S.tab==='home'?(S.promo?'promo':'home'):S.tab;
+ $('#drawer').innerHTML=`<div class=dr-ov onclick="closeDrawer()"></div><aside class=dr-pn><div class=dr-hd><img src="assets/brand-logo.png" alt="NICESO"><small>CATALOG · PRODUCT COLLECTION</small></div><div class=dr-ls>${drawerItems().map(i=>`<button type=button class="dr-it ${i[0]===on?'on':''}" onclick="drawerGo('${i[0]}')"><svg viewBox="0 0 24 24" aria-hidden="true">${i[2]}</svg><span>${i[1]}</span></button>`).join('')}</div><div class=dr-ft><b style="color:var(--tx)">NICESO CATALOG</b><br>Versi ${APP_VER}</div></aside>`;
+ document.body.style.overflow='hidden';
+ requestAnimationFrame(()=>requestAnimationFrame(()=>$('#drawer').classList.add('on')));
+}
+function closeDrawer(){$('#drawer').classList.remove('on');document.body.style.overflow=''}
+function drawerGo(k){
+ closeDrawer();
+ if(k==='about')return infoSheet('about');
+ const reset=()=>{S.q='';S.cat='';S.promo=false};
+ const to=(t,f)=>{if(f)f();if(t===S.tab)render();else go(t);window.scrollTo(0,0)};
+ if(k==='home')to('home',reset);
+ else if(k==='all'){to('home',reset);setTimeout(()=>{const g=$('#g');if(g)g.scrollIntoView({behavior:'smooth'})},150)}
+ else if(k==='promo')to('home',()=>{reset();S.promo=true});
+ else to(k);
+}
+function infoSheet(k){
+ if(k==='about'){sheet(`<h2>NICESO CATALOG</h2><div class=kv><span>Versi</span>${APP_VER}</div><div class=kv><span>Jumlah produk</span>${P.length}</div><div class=kv><span>Kategori</span>${CATS.length}</div><p style="color:var(--mut);font-size:13px;line-height:1.5">Katalog produk NICESO untuk melihat harga, promo, dan kode barang dengan cepat.</p><button class="btn o w" onclick="closeM()">Tutup</button>`);return}
+ const E={notif:[HDR_IC.bell,'Notifikasi','Belum ada notifikasi','Pengumuman dan info terbaru dari NICESO akan tampil di sini.'],cart:[HDR_IC.bag,'Keranjang','Keranjang masih kosong','Produk yang Anda pilih akan tampil di sini.']};
+ const e=E[k];if(!e)return;
+ sheet(`<h2>${e[1]}</h2><div class=nf-empty><svg viewBox="0 0 24 24" aria-hidden="true">${e[0]}</svg><b style="color:var(--tx)">${e[2]}</b><p style="margin:6px 0 0;font-size:13px">${e[3]}</p></div><button class="btn o w" onclick="closeM()">Tutup</button>`);
+}
 /* ===== Beranda ===== */
 function home(){
  const svg=p=>`<svg viewBox="0 0 24 24" aria-hidden="true">${p}</svg>`;
@@ -206,7 +280,7 @@ function home(){
  const iCat='<path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/>';
  const iScan='<path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M8 9v6M12 9v6M16 9v6"/>';
  const catTiles=`<button type="button" class="cat-tile ${S.promo?'on':''}" onclick="S.promo=!S.promo;home()">${svg(iPromo)}<span>Promo</span></button><button type="button" class="cat-tile ${S.cat?'':'on'}" onclick="S.cat='';home()">${svg(iAll)}<span>Semua</span></button>${CATS.map(c=>`<button type="button" class="cat-tile ${S.cat===c?'on':''}" onclick="S.cat=this.dataset.c;home()" data-c="${esc(c)}">${svg(iCat)}<span>${esc(c)}</span></button>`).join('')}`;
- $('#v').innerHTML=`<div class=top><div class=brand><img src="assets/brand-logo.png" alt="NICESO"><div><h1>CATALOG</h1><small>PRODUCT COLLECTION</small></div></div><div class=sr><input id=q type=search placeholder="Cari SKU atau nama barang" value="${esc(S.q)}"><button class=scan-btn onclick="startBarcodeScan()" aria-label="Scan barcode" title="Scan barcode">${svg(iScan)}</button></div></div><div class=cat-grid>${catTiles}</div><div class=hd id=cn></div><div id=g class=grid></div>`;
+ $('#v').innerHTML=`<div class=top><div class=hdr><button type=button class=ib onclick="openDrawer()" aria-label="Menu">${svg(HDR_IC.menu)}</button><div class=hdr-brand><img src="assets/brand-logo.png" alt="NICESO"><small>PRODUCT COLLECTION</small></div><div class=hdr-r><button type=button class=ib onclick="infoSheet('notif')" aria-label="Notifikasi">${svg(HDR_IC.bell)}</button><button type=button class=ib onclick="infoSheet('cart')" aria-label="Keranjang">${svg(HDR_IC.bag)}</button></div></div><div class=sr><input id=q type=search placeholder="Cari SKU atau nama barang" value="${esc(S.q)}"><button class=scan-btn onclick="startBarcodeScan()" aria-label="Scan barcode" title="Scan barcode">${svg(iScan)}</button></div></div><div class=cat-grid>${catTiles}</div><div class=hd id=cn></div><div id=g class=grid></div>`;
  $('#q').oninput=e=>{S.q=e.target.value;grid()};grid()}
 let barcodeReader=null,barcodeControls=null,scanBusy=false,scanSession=0;
 async function startBarcodeScan(){
@@ -307,8 +381,8 @@ async function impX(e){const f=e.target.files[0];if(!f)return;if(typeof XLSX==='
  await sb.from('categories').upsert([...new Set(a.map(x=>x.cat))].map(name=>({name})));await load();me();toast(a.length+' produk diimpor')}
 
 if(localStorage.theme&&localStorage.theme!=='auto')document.documentElement.dataset.theme=localStorage.theme;
-(async()=>{try{await load()}catch(e){$('#v').innerHTML='<div class=pad>Tidak bisa memuat data. Periksa internet dan config.js.<br><small>'+esc(e.message||e)+'</small></div>';return}
- S.admin=await chkAdmin().catch(()=>false);render();
+(async()=>{try{await load()}catch(e){$('#v').innerHTML='<div class=pad>Tidak bisa memuat data. Periksa internet dan config.js.<br><small>'+esc(e.message||e)+'</small></div>';hideSplash();return}
+ S.admin=await chkAdmin().catch(()=>false);render();hideSplash();
  await registerAndroidBackHandler();
  const rf=async()=>{try{await load()}catch(e){return}if(S.tab==='home')render(true);else if(S.tab==='cat'||S.tab==='fav')render()};
  sb.channel('rt').on('postgres_changes',{event:'*',schema:'public',table:'products'},rf).subscribe();
