@@ -158,18 +158,83 @@ nav{z-index:15}
 .dr-ft{padding:14px 20px;border-top:1px solid var(--bd);font-size:11px;color:var(--mut);line-height:1.6}
 .nf-empty{text-align:center;padding:26px 10px 14px;color:var(--mut)}
 .nf-empty svg{display:block;margin:0 auto 10px;width:44px;height:44px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+/* ===== Beranda: search bar & tombol barcode ===== */
+.sr{--sr-h:52px;gap:10px;align-items:stretch;margin-top:14px}
+.sr:before{transform:translateY(-50%);z-index:1;pointer-events:none}
+.sr #q{height:var(--sr-h);min-height:var(--sr-h);padding:0 14px 0 46px;font-size:14px;border:1px solid var(--bd);border-radius:16px;background:var(--soft);box-shadow:none;margin:0;text-overflow:ellipsis}
+.sr #q::placeholder{color:var(--mut);opacity:1}
+.sr .scan-btn{width:var(--sr-h);height:var(--sr-h);min-height:var(--sr-h);padding:0;border-radius:16px;display:grid;place-items:center;box-shadow:0 5px 14px rgba(215,25,32,.2)}
+/* ===== Banner promo & halaman Promo ===== */
+.pb{position:relative;overflow:hidden;margin:14px 16px 0;border-radius:22px;background:linear-gradient(135deg,#e0212a 0%,#b3121a 58%,#2a0b0d 135%);color:#fff;padding:18px 16px;display:flex;align-items:center;gap:10px;min-height:156px;cursor:pointer;box-shadow:0 10px 26px rgba(215,25,32,.22);-webkit-user-select:none;user-select:none}
+@media(min-width:641px){.pb{margin:14px clamp(18px,4vw,52px) 0}}
+.pb:active{transform:scale(.99)}
+.pb:before{content:"";position:absolute;right:-40px;top:-50px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.08);pointer-events:none}
+.pb-tx{position:relative;flex:1;min-width:0}
+.pb-pill{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:4px 10px;font-size:9px;font-weight:800;letter-spacing:.12em}
+.pb h3{margin:10px 0 6px;font-size:19px;line-height:1.2;font-weight:800;letter-spacing:-.02em}
+.pb p{margin:0 0 10px;font-size:12px;line-height:1.4;opacity:.9}
+.pb-cnt{display:inline-block;background:#111;color:#fff;border-radius:999px;padding:3px 9px;font-size:10px;font-weight:700;margin:0 0 10px}
+.pb-btn{display:inline-flex;align-items:center;gap:6px;background:#fff;color:#d71920;border-radius:999px;padding:9px 14px;font-size:11px;font-weight:800;letter-spacing:.04em}
+.pb-btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.pb-im{position:relative;flex:none;width:104px;height:104px}
+.pb-im img{position:absolute;width:60px;height:60px;object-fit:contain;padding:4px;background:#fff;border-radius:14px;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.pb-ic{position:relative;flex:none;width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,.16);display:grid;place-items:center}
+.pb-ic svg{width:40px;height:40px;fill:none;stroke:#fff;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.pb-s{cursor:default;min-height:0}.pb-s:active{transform:none}
+.pg-t{font-size:17px;font-weight:800;letter-spacing:.02em}
+.ib-sp{flex:none;width:44px}
+.pm-empty{text-align:center;padding:36px 24px;color:var(--mut)}
+.pm-ei{width:84px;height:84px;margin:0 auto 14px;border-radius:50%;background:rgba(215,25,32,.09);color:var(--r);display:grid;place-items:center}
+.pm-ei svg{width:38px;height:38px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.pm-empty b{display:block;color:var(--tx);font-size:16px}
+.pm-empty p{margin:6px 0 16px;font-size:13px;line-height:1.5}
+/* ===== Beranda: kategori bulat ===== */
+.cc-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px 6px;padding:18px 16px 4px}
+@media(min-width:641px){.cc-grid{padding-left:clamp(18px,4vw,52px);padding-right:clamp(18px,4vw,52px)}}
+@media(min-width:560px){.cc-grid{grid-template-columns:repeat(8,minmax(0,1fr))}}
+.cc-it{display:flex;flex-direction:column;align-items:center;gap:7px;min-width:0;padding:0;border:0;background:transparent;color:var(--tx);cursor:pointer;font:inherit}
+.cc-c{width:58px;height:58px;border-radius:50%;background:var(--soft);border:1.5px solid var(--bd);display:grid;place-items:center;overflow:hidden;color:var(--mut);transition:border-color .15s,box-shadow .15s}
+.cc-c img{width:100%;height:100%;object-fit:contain;padding:7px}
+.cc-c svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.cc-l{font-size:11px;font-weight:600;line-height:1.2;text-align:center;max-width:100%;min-height:2.4em;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-word;color:var(--tx)}
+.cc-it.on .cc-c{border:2px solid var(--r);box-shadow:0 0 0 3px rgba(215,25,32,.12);color:var(--r)}
+.cc-it.on .cc-l{color:var(--r);font-weight:800}
+/* ===== Produk Populer & kartu kecil ===== */
+.sec{display:flex;align-items:center;justify-content:space-between;padding:20px 16px 0}
+@media(min-width:641px){.sec{padding-left:clamp(18px,4vw,52px);padding-right:clamp(18px,4vw,52px)}}
+.sec b{font-size:13px;font-weight:800;letter-spacing:.08em}
+.sec button{border:0;background:transparent;color:var(--r);font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:4px;padding:6px 0 6px 8px;cursor:pointer}
+.sec button svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:12px 16px 4px}
+@media(min-width:641px){.g3{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;padding-left:clamp(18px,4vw,52px);padding-right:clamp(18px,4vw,52px)}}
+.cs{position:relative;background:var(--card);border:1px solid var(--bd);border-radius:14px;overflow:hidden;cursor:pointer;min-width:0;display:flex;flex-direction:column}
+.cs:active{transform:scale(.97)}
+.cs-im{position:relative;aspect-ratio:1;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:26px}
+.cs-im img{width:100%;height:100%;object-fit:contain;padding:6px}
+.cs-bd{padding:7px 7px 9px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.cs-nm{font-size:11px;font-weight:650;line-height:1.3;min-height:2.6em;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-word}
+.cs-sk{font-size:10px;color:var(--mut);letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cs-pr{font-size:clamp(10.5px,3.4vw,12.5px);font-weight:800;margin-top:2px;white-space:nowrap}
+.cs-pr.red{color:var(--r)}
+.cs-pn{font-size:10px;color:var(--mut);text-decoration:line-through;white-space:nowrap}
+.cs-hr{position:absolute;right:5px;top:5px;width:28px;height:28px;border:0;border-radius:50%;background:rgba(255,255,255,.92);color:#d71920;display:grid;place-items:center;padding:0;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.cs-hr svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cs-hr.on svg{fill:currentColor}
+.mr{padding:12px 16px 4px}
+@media(min-width:641px){.mr{padding-left:clamp(18px,4vw,52px);padding-right:clamp(18px,4vw,52px)}}
+.cs-bg{position:absolute;left:5px;top:5px;background:var(--r);color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:999px}
 /* ===== Splash screen ===== */
-#splash{position:fixed;inset:0;z-index:100;background:#fff;display:flex;align-items:center;justify-content:center;opacity:1;transition:opacity .45s ease}
+#splash{position:fixed;inset:0;z-index:100;background:#fff;display:flex;align-items:center;justify-content:center;opacity:1;transition:opacity .6s ease}
 #splash.out{opacity:0;pointer-events:none}
 .sp-logo{position:relative;display:flex;justify-content:center}
-.sp-logo img{display:block;width:min(62vw,260px);height:auto;max-height:30vh;object-fit:contain;animation:spIn .8s ease both}
+.sp-logo img{display:block;width:min(46vw,200px);height:auto;object-fit:contain;animation:spIn 1s ease both}
 .sp-txt{position:absolute;top:100%;left:50%;width:90vw;margin-left:-45vw;margin-top:26px;text-align:center}
-.sp-t{display:block;font-size:19px;font-weight:800;letter-spacing:.14em;color:#191919;animation:spUp .7s ease .7s both}
-.sp-d{display:block;margin-top:8px;font-size:12px;letter-spacing:.04em;color:#555;animation:spUp .7s ease 1.2s both}
+.sp-t{display:block;font-size:19px;font-weight:800;letter-spacing:.14em;color:#191919;animation:spUp .8s ease 1.2s both}
+.sp-d{display:block;margin-top:8px;font-size:12px;letter-spacing:.04em;color:#555;animation:spUp .8s ease 2.1s both}
 @keyframes spIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
 @keyframes spUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 </style></head><body>
-<div id="splash" aria-label="NICESO CATALOG"><div class="sp-logo"><img src="assets/brand-logo.png" alt="NICESO"><div class="sp-txt"><span class="sp-t">NICESO CATALOG</span><span class="sp-d">Developer by Aziz Maulana Malik Ibrahim</span></div></div></div>
+<div id="splash" aria-label="NICESO CATALOG"><div class="sp-logo"><img src="assets/icon-logo.png" alt="NICESO"><div class="sp-txt"><span class="sp-t">NICESO CATALOG</span><span class="sp-d">Developer by Aziz Maulana Malik Ibrahim</span></div></div></div>
 <div id="v"></div><div id="m" class="sheet"></div><div id="drawer"></div><div id="t"></div>
 <nav id="nav"></nav>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -178,11 +243,11 @@ nav{z-index:15}
 <script src="zxing-browser.js"></script>
 <script>
 /* ===== Splash screen ===== */
-const SPLASH_MIN=2500,SPLASH_MAX=6000;
+const SPLASH_MIN=4500,SPLASH_MAX=8000;
 function hideSplash(){
  const s=document.getElementById('splash');if(!s||s.dataset.done)return;s.dataset.done='1';
  const wait=Math.max(0,SPLASH_MIN-performance.now());
- setTimeout(()=>{s.classList.add('out');setTimeout(()=>s.remove(),500)},wait);
+ setTimeout(()=>{s.classList.add('out');setTimeout(()=>s.remove(),700)},wait);
 }
 setTimeout(hideSplash,SPLASH_MAX);
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -241,16 +306,16 @@ async function registerAndroidBackHandler(){
  try{await App.addListener('backButton',()=>handleAppBack(App));}
  catch(e){window.__nicesoBackHandlerRegistered=false;console.error('Gagal memasang Android Back Handler:',e)}
 }
-function render(keep){$('#nav').style.display=(S.tab==='me'&&S.admin)?'none':'flex';document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t==S.tab));
+function render(keep){$('#nav').style.display=(S.tab==='me'&&S.admin)?'none':'flex';document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t==((S.tab==='promo'||S.tab==='list')?'home':S.tab)));
  if(keep&&S.tab==='home'&&$('#g')){grid();return}
- ({home,cat:cats,vis,fav:favs,me})[S.tab]()}
-/* ===== Header, sidebar, notifikasi & keranjang ===== */
+ ({home,cat:cats,vis,fav:favs,me,promo:promoPage,list:listPage})[S.tab]()}
+/* ===== Header, sidebar & notifikasi ===== */
 const APP_VER='1.0.0';
-const HDR_IC={menu:'<path d="M4 7h16M4 12h16M4 17h10"/>',bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/>',bag:'<path d="M6 7h12l1 13H5z"/><path d="M9 7V6a3 3 0 0 1 6 0v1"/>'};
+const HDR_IC={menu:'<path d="M4 7h16M4 12h16M4 17h10"/>',bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/>'};
 const DRAWER_IC={all:'<path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/>',promo:'<path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.2"/><circle cx="17" cy="17" r="2.2"/>',set:'<path d="M4 6h8M18 6h2M4 12h2M12 12h8M4 18h10M20 18h0"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/>',info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>'};
 function drawerItems(){return [['home','Beranda',IC.home],['all','Semua Produk',DRAWER_IC.all],['cat','Kategori Produk',IC.cat],['promo','Promo',DRAWER_IC.promo],['fav','Produk Favorit',IC.fav],['me','Pengaturan',DRAWER_IC.set],['about','Tentang NICESO CATALOG',DRAWER_IC.info]]}
 function openDrawer(){
- const on=S.tab==='home'?(S.promo?'promo':'home'):S.tab;
+ const on=S.tab==='home'?(S.promo?'promo':'home'):(S.tab==='list'?'all':S.tab);
  $('#drawer').innerHTML=`<div class=dr-ov onclick="closeDrawer()"></div><aside class=dr-pn><div class=dr-hd><img src="assets/brand-logo.png" alt="NICESO"><small>CATALOG · PRODUCT COLLECTION</small></div><div class=dr-ls>${drawerItems().map(i=>`<button type=button class="dr-it ${i[0]===on?'on':''}" onclick="drawerGo('${i[0]}')"><svg viewBox="0 0 24 24" aria-hidden="true">${i[2]}</svg><span>${i[1]}</span></button>`).join('')}</div><div class=dr-ft><b style="color:var(--tx)">NICESO CATALOG</b><br>Versi ${APP_VER}</div></aside>`;
  document.body.style.overflow='hidden';
  requestAnimationFrame(()=>requestAnimationFrame(()=>$('#drawer').classList.add('on')));
@@ -262,16 +327,63 @@ function drawerGo(k){
  const reset=()=>{S.q='';S.cat='';S.promo=false};
  const to=(t,f)=>{if(f)f();if(t===S.tab)render();else go(t);window.scrollTo(0,0)};
  if(k==='home')to('home',reset);
- else if(k==='all'){to('home',reset);setTimeout(()=>{const g=$('#g');if(g)g.scrollIntoView({behavior:'smooth'})},150)}
- else if(k==='promo')to('home',()=>{reset();S.promo=true});
+ else if(k==='all'){LISTK='all';to('list')}
+ else if(k==='promo')to('promo');
  else to(k);
 }
 function infoSheet(k){
  if(k==='about'){sheet(`<h2>NICESO CATALOG</h2><div class=kv><span>Versi</span>${APP_VER}</div><div class=kv><span>Jumlah produk</span>${P.length}</div><div class=kv><span>Kategori</span>${CATS.length}</div><p style="color:var(--mut);font-size:13px;line-height:1.5">Katalog produk NICESO untuk melihat harga, promo, dan kode barang dengan cepat.</p><button class="btn o w" onclick="closeM()">Tutup</button>`);return}
- const E={notif:[HDR_IC.bell,'Notifikasi','Belum ada notifikasi','Pengumuman dan info terbaru dari NICESO akan tampil di sini.'],cart:[HDR_IC.bag,'Keranjang','Keranjang masih kosong','Produk yang Anda pilih akan tampil di sini.']};
+ const E={notif:[HDR_IC.bell,'Notifikasi','Belum ada notifikasi','Pengumuman dan info terbaru dari NICESO akan tampil di sini.']};
  const e=E[k];if(!e)return;
  sheet(`<h2>${e[1]}</h2><div class=nf-empty><svg viewBox="0 0 24 24" aria-hidden="true">${e[0]}</svg><b style="color:var(--tx)">${e[2]}</b><p style="margin:6px 0 0;font-size:13px">${e[3]}</p></div><button class="btn o w" onclick="closeM()">Tutup</button>`);
 }
+/* ===== Banner promo & halaman Promo ===== */
+const svgi=p=>`<svg viewBox="0 0 24 24" aria-hidden="true">${p}</svg>`;
+const PM_IC={back:'<path d="M15 5l-7 7 7 7"/>',arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>'};
+function promoList(){return P.filter(prom).sort((a,b)=>pct(b)-pct(a))}
+function promoBanner(){
+ const l=promoList(),n=l.length,im=l.filter(p=>p.url).slice(0,3);
+ const art=im.length?`<div class=pb-im>${im.map((p,i)=>`<img loading=lazy src="${p.url}" alt="" style="top:${i*22}px;left:${i*22}px">`).join('')}</div>`:`<div class=pb-ic>${svgi(DRAWER_IC.promo)}</div>`;
+ return `<div class=pb role=button tabindex=0 onclick="go('promo')"><div class=pb-tx><span class=pb-pill>PROMO SPESIAL NICESO</span><h3>Belanja Lebih Hemat,<br>Pilihan Lebih Banyak!</h3><p>Temukan berbagai promo menarik dari NICESO.</p>${n?`<span class=pb-cnt>${n} produk sedang promo</span><br>`:''}<span class=pb-btn>LIHAT SEMUA PROMO ${svgi(PM_IC.arrow)}</span></div>${art}</div>`;
+}
+function pageBack(){const previous=TAB_HISTORY.pop();S.tab=previous||'home';render()}
+function promoPage(){
+ const l=promoList(),n=l.length;
+ $('#v').innerHTML=`<div class=top><div class=hdr><button type=button class=ib onclick="pageBack()" aria-label="Kembali">${svgi(PM_IC.back)}</button><div class=hdr-brand><b class=pg-t>Promo</b><small>${n} PRODUK PROMO AKTIF</small></div><span class=ib-sp></span></div></div><div class="pb pb-s"><div class=pb-tx><span class=pb-pill>PROMO SPESIAL NICESO</span><h3>Belanja Lebih Hemat,<br>Pilihan Lebih Banyak!</h3><p style="margin:0">Temukan berbagai promo menarik dari NICESO.</p></div></div>${n?`<div class=hd>Diskon terbesar lebih dulu</div><div class=grid>${l.map(card).join('')}</div>`:`<div class=pm-empty><div class=pm-ei>${svgi(DRAWER_IC.promo)}</div><b>Belum ada promo aktif</b><p>Promo terbaru dari NICESO akan tampil di sini.</p><button type=button class=btn onclick="drawerGo('all')">Lihat semua produk</button></div>`}`;
+}
+/* ===== Kategori bulat (beranda) ===== */
+function catCircles(){
+ const MAXC=7,ph={};for(const p of P){if(p.url&&!ph[p.cat])ph[p.cat]=p.url}
+ const more=CATS.length>MAXC;let vis=more?CATS.slice(0,MAXC-1):CATS.slice();
+ if(more&&S.cat&&!vis.includes(S.cat))vis[vis.length-1]=S.cat;
+ const it=(on,lbl,inner,click,dc)=>`<button type=button class="cc-it ${on?'on':''}" onclick="${click}"${dc!==undefined?` data-c="${esc(dc)}"`:''}><span class=cc-c>${inner}</span><span class=cc-l>${esc(lbl)}</span></button>`;
+ return it(!S.cat,'Semua',svgi(IC.cat),"S.cat='';S.promo=false;home()")
+  +vis.map(c=>it(S.cat===c,c,ph[c]?`<img loading=lazy src="${ph[c]}" alt="">`:svgi(DRAWER_IC.all),"S.cat=this.dataset.c;S.promo=false;home()",c)).join('')
+  +(more?it(false,'Lihat Semua',svgi(PM_IC.arrow),"go('cat')"):'');
+}
+/* ===== Produk Populer & daftar produk ===== */
+let LISTK='all',LISTN=60,LISTC=[],FILTN=60,FILTK='';const PAGE=60;
+const moreBtn=(total,shown,fn)=>total>shown?`<button type=button class="btn o w" onclick="${fn}">Muat lebih banyak (${total-shown} lagi)</button>`:'';
+function noteView(id){try{const v=JSON.parse(localStorage.views||'{}');v[id]=(v[id]||0)+1;localStorage.views=JSON.stringify(v)}catch(e){}}
+function popList(){
+ let v={};try{v=JSON.parse(localStorage.views||'{}')}catch(e){}
+ const seen=new Set(),out=[],add=p=>{if(p&&!seen.has(p.id)){seen.add(p.id);out.push(p)}};
+ P.filter(p=>v[p.id]>0).sort((a,b)=>v[b.id]-v[a.id]).forEach(add);
+ promoList().forEach(add);
+ P.forEach(add);
+ return out;
+}
+const cardS=p=>`<div class=cs onclick="detail('${p.id}')"><div class=cs-im>${p.url?`<img loading=lazy src="${p.url}" alt="">`:'🖼'}${prom(p)?`<b class=cs-bg>-${pct(p)}%</b>`:''}<button type=button class="cs-hr ${S.fav.has(p.id)?'on':''}" aria-label="Favorit" onclick="event.stopPropagation();fav('${p.id}')">${svgi(IC.fav)}</button></div><div class=cs-bd><div class=cs-nm>${esc(p.name)}</div><div class=cs-sk>${esc(p.sku)}</div><div class="cs-pr ${prom(p)?'red':''}">${rp(cur(p))}</div>${prom(p)?`<span class=cs-pn>${rp(p.normal)}</span>`:''}</div></div>`;
+function homeSections(){
+ if(!P.length)return '<div class=empty>Belum ada produk</div>';
+ return `<div class=sec><b>PRODUK POPULER</b><button type=button onclick="openList('pop')">Lihat Semua ${svgi(PM_IC.arrow)}</button></div><div class=g3>${popList().slice(0,6).map(cardS).join('')}</div><div class=mr><button type=button class="btn o w" onclick="openList('all')">Lihat Semua Produk (${P.length})</button></div>`;
+}
+function openList(k){LISTK=k;LISTN=PAGE;if(S.tab==='list')render();else go('list');window.scrollTo(0,0)}
+function listPage(){
+ const pop=LISTK==='pop',t=pop?'Produk Populer':'Semua Produk';LISTC=pop?popList():P;const l=LISTC;
+ $('#v').innerHTML=`<div class=top><div class=hdr><button type=button class=ib onclick="pageBack()" aria-label="Kembali">${svgi(PM_IC.back)}</button><div class=hdr-brand><b class=pg-t>${t}</b><small>${l.length} PRODUK</small></div><span class=ib-sp></span></div></div>${l.length?`<div class=g3 id=lg style="padding-top:14px">${l.slice(0,LISTN).map(cardS).join('')}</div><div class=mr id=lm>${moreBtn(l.length,LISTN,'listMore()')}</div>`:'<div class=empty>Belum ada produk</div>'}`;
+}
+function listMore(){const from=LISTN,lg=$('#lg'),lm=$('#lm');if(!lg||!lm)return;LISTN+=PAGE;lg.insertAdjacentHTML('beforeend',LISTC.slice(from,LISTN).map(cardS).join(''));lm.innerHTML=moreBtn(LISTC.length,LISTN,'listMore()')}
 /* ===== Beranda ===== */
 function home(){
  const svg=p=>`<svg viewBox="0 0 24 24" aria-hidden="true">${p}</svg>`;
@@ -279,8 +391,8 @@ function home(){
  const iPromo='<path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.2"/><circle cx="17" cy="17" r="2.2"/>';
  const iCat='<path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/>';
  const iScan='<path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M8 9v6M12 9v6M16 9v6"/>';
- const catTiles=`<button type="button" class="cat-tile ${S.promo?'on':''}" onclick="S.promo=!S.promo;home()">${svg(iPromo)}<span>Promo</span></button><button type="button" class="cat-tile ${S.cat?'':'on'}" onclick="S.cat='';home()">${svg(iAll)}<span>Semua</span></button>${CATS.map(c=>`<button type="button" class="cat-tile ${S.cat===c?'on':''}" onclick="S.cat=this.dataset.c;home()" data-c="${esc(c)}">${svg(iCat)}<span>${esc(c)}</span></button>`).join('')}`;
- $('#v').innerHTML=`<div class=top><div class=hdr><button type=button class=ib onclick="openDrawer()" aria-label="Menu">${svg(HDR_IC.menu)}</button><div class=hdr-brand><img src="assets/brand-logo.png" alt="NICESO"><small>PRODUCT COLLECTION</small></div><div class=hdr-r><button type=button class=ib onclick="infoSheet('notif')" aria-label="Notifikasi">${svg(HDR_IC.bell)}</button><button type=button class=ib onclick="infoSheet('cart')" aria-label="Keranjang">${svg(HDR_IC.bag)}</button></div></div><div class=sr><input id=q type=search placeholder="Cari SKU atau nama barang" value="${esc(S.q)}"><button class=scan-btn onclick="startBarcodeScan()" aria-label="Scan barcode" title="Scan barcode">${svg(iScan)}</button></div></div><div class=cat-grid>${catTiles}</div><div class=hd id=cn></div><div id=g class=grid></div>`;
+ const catTiles=catCircles();
+ $('#v').innerHTML=`<div class=top><div class=hdr><button type=button class=ib onclick="openDrawer()" aria-label="Menu">${svg(HDR_IC.menu)}</button><div class=hdr-brand><img src="assets/brand-logo.png" alt="NICESO"><small>PRODUCT COLLECTION</small></div><div class=hdr-r><button type=button class=ib onclick="infoSheet('notif')" aria-label="Notifikasi">${svg(HDR_IC.bell)}</button></div></div><div class=sr><input id=q type=search placeholder="Cari nama produk atau kode barang..." value="${esc(S.q)}"><button class=scan-btn onclick="startBarcodeScan()" aria-label="Scan barcode" title="Scan barcode">${svg(iScan)}</button></div></div>${promoBanner()}<div class=cc-grid>${catTiles}</div><div id=hs></div><div class=hd id=cn></div><div id=g class=g3></div><div id=gm></div>`;
  $('#q').oninput=e=>{S.q=e.target.value;grid()};grid()}
 let barcodeReader=null,barcodeControls=null,scanBusy=false,scanSession=0;
 async function startBarcodeScan(){
@@ -310,14 +422,22 @@ function stopBarcodeScan(){
  if(v?.srcObject){for(const track of v.srcObject.getTracks())track.stop();v.srcObject=null}
  closeM();
 }
-function grid(){const k=S.q.trim().toLowerCase();const l=P.filter(p=>(!S.cat||p.cat===S.cat)&&(!S.promo||prom(p))&&(!k||p.name.toLowerCase().includes(k)||p.sku.toLowerCase().includes(k)));
- if($('#cn'))$('#cn').textContent=l.length+' produk';$('#g').innerHTML=l.length?l.map(card).join(''):'<div class=empty>🔍<br>Produk tidak ditemukan</div>'}
+function grid(){const k=S.q.trim().toLowerCase(),flt=!!(k||S.cat||S.promo),hs=$('#hs'),cn=$('#cn'),g=$('#g'),gm=$('#gm');
+ if(!hs||!cn||!g||!gm)return;
+ hs.style.display=flt?'none':'';cn.style.display=flt?'':'none';g.style.display=flt?'':'none';
+ if(!flt){FILTK='';hs.innerHTML=homeSections();g.innerHTML='';gm.innerHTML='';return}
+ const key=k+'|'+S.cat+'|'+S.promo;if(key!==FILTK){FILTK=key;FILTN=PAGE}
+ hs.innerHTML='';
+ const l=P.filter(p=>(!S.cat||p.cat===S.cat)&&(!S.promo||prom(p))&&(!k||p.name.toLowerCase().includes(k)||p.sku.toLowerCase().includes(k)));
+ cn.textContent=l.length+' produk';g.innerHTML=l.length?l.slice(0,FILTN).map(cardS).join(''):'<div class=empty>🔍<br>Produk tidak ditemukan</div>';
+ gm.innerHTML=l.length>FILTN?`<div class=mr>${moreBtn(l.length,FILTN,'filtMore()')}</div>`:''}
+function filtMore(){FILTN+=PAGE;grid()}
 function cats(){$('#v').innerHTML=`<div class=pad><h2>Kategori</h2>${CATS.length?`<div class=cg>${CATS.map(c=>`<div class=ct onclick="S.cat=this.dataset.c;S.promo=false;S.q='';go('home')" data-c="${esc(c)}"><i>▦</i><b>${esc(c)}</b><small>${P.filter(p=>p.cat===c).length} produk</small></div>`).join('')}</div>`:'<div class=empty>Belum ada kategori</div>'}</div>`}
 function favs(){const l=P.filter(p=>S.fav.has(p.id));$('#v').innerHTML=`<div class=pad><h2>Favorit</h2></div><div class=grid>${l.length?l.map(card).join(''):'<div class=empty>♡<br>Belum ada favorit.<br>Ketuk ikon hati pada produk.</div>'}</div>`}
 /* ===== Detail ===== */
 function sheet(h){$('#m').innerHTML=`<div>${h}</div>`;$('#m').classList.add('on')}
 const closeM=()=>$('#m').classList.remove('on');$('#m').onclick=e=>{if(e.target.id==='m')closeM()};
-function detail(id){const p=P.find(x=>x.id===id);sheet(`${p.url?`<img class=big src="${p.url}">`:'<div class=big></div>'}<h2 style="margin-top:14px">${esc(p.name)}</h2><small style="color:var(--mut)">SKU: ${esc(p.sku)}</small><div style="font-size:24px;margin:10px 0">${price(p)}</div>${prom(p)?`<b class=badge style="position:static;display:inline-block">PROMO -${pct(p)}%</b>`:''}<div class=kv><span>Kategori</span>${esc(p.cat)}</div><div class=kv><span>Status harga</span>${prom(p)?'Harga Promo':'Harga Normal'}</div><div class=kv><span>Harga normal</span>${rp(p.normal)}</div>${p.promo>0?`<div class=kv><span>Harga promo</span>${rp(p.promo)}</div>`:''}<div class=row style="margin-top:14px"><button class="btn o" onclick="fav('${p.id}');detail('${p.id}')">${S.fav.has(p.id)?'♥ Hapus favorit':'♡ Favorit'}</button><button class=btn onclick="closeM()">Tutup</button></div>`)}
+function detail(id){if(!$('#m').classList.contains('on'))noteView(id);const p=P.find(x=>x.id===id);sheet(`${p.url?`<img class=big src="${p.url}">`:'<div class=big></div>'}<h2 style="margin-top:14px">${esc(p.name)}</h2><small style="color:var(--mut)">SKU: ${esc(p.sku)}</small><div style="font-size:24px;margin:10px 0">${price(p)}</div>${prom(p)?`<b class=badge style="position:static;display:inline-block">PROMO -${pct(p)}%</b>`:''}<div class=kv><span>Kategori</span>${esc(p.cat)}</div><div class=kv><span>Status harga</span>${prom(p)?'Harga Promo':'Harga Normal'}</div><div class=kv><span>Harga normal</span>${rp(p.normal)}</div>${p.promo>0?`<div class=kv><span>Harga promo</span>${rp(p.promo)}</div>`:''}<div class=row style="margin-top:14px"><button class="btn o" onclick="fav('${p.id}');detail('${p.id}')">${S.fav.has(p.id)?'♥ Hapus favorit':'♡ Favorit'}</button><button class=btn onclick="closeM()">Tutup</button></div>`)}
 /* ===== Gambar & Visual Search ===== */
 async function proc(file){const b=await createImageBitmap(file);const sc=Math.min(1,800/Math.max(b.width,b.height));const c=document.createElement('canvas');c.width=Math.round(b.width*sc);c.height=Math.round(b.height*sc);c.getContext('2d').drawImage(b,0,0,c.width,c.height);
  const blob=await new Promise(r=>c.toBlob(r,'image/jpeg',.8));return{blob,hash:hashOf(b)}}
@@ -384,7 +504,7 @@ if(localStorage.theme&&localStorage.theme!=='auto')document.documentElement.data
 (async()=>{try{await load()}catch(e){$('#v').innerHTML='<div class=pad>Tidak bisa memuat data. Periksa internet dan config.js.<br><small>'+esc(e.message||e)+'</small></div>';hideSplash();return}
  S.admin=await chkAdmin().catch(()=>false);render();hideSplash();
  await registerAndroidBackHandler();
- const rf=async()=>{try{await load()}catch(e){return}if(S.tab==='home')render(true);else if(S.tab==='cat'||S.tab==='fav')render()};
+ const rf=async()=>{try{await load()}catch(e){return}if(S.tab==='home')render(true);else if(S.tab==='cat'||S.tab==='fav'||S.tab==='promo'||S.tab==='list')render()};
  sb.channel('rt').on('postgres_changes',{event:'*',schema:'public',table:'products'},rf).subscribe();
  document.addEventListener('visibilitychange',()=>{if(!document.hidden)rf()})})();
 </script></body></html>
